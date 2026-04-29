@@ -9,6 +9,9 @@ on:
 jobs:
   build-and-test:
     runs-on: ubunutu-latest
+    defaults:
+        run:
+          working-directory: ./devOpsExample
 
     steps:
       - uses: actions/checkout@v4
