@@ -16,6 +16,9 @@ jobs:
       github.event_name == 'push'
 
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./devOpsExample
 
     steps:
       - name: Checkout correct commit
@@ -25,7 +28,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
 
       - run: npm ci
 

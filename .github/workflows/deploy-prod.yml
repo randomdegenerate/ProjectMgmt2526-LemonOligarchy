@@ -8,27 +8,30 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
+    defaults:
+      run:
+        working-directory: ./devOpsExample
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 24
 
       - run: npm ci
-
-      - name: Deploy backend
-        run: npm run deploy:prod
-        env:
-          PROD_API_URL: ${{ secrets.PROD_API_URL }}
-
-      - run: npm install -g eas-cli
-
-      - name: Build production app
+      - name: Build Production app
         run: eas build --platform android --profile production --non-interactive
-        env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-
+#      - name: Deploy backend
+#        run: npm run deploy:prod
+#       env:
+#         PROD_API_URL: ${{ secrets.PROD_API_URL }}
+#
+#     - run: npm install -g eas-cli
+#
+#     - name: Build production app
+#       run: eas build --platform android --profile production --non-interactive
+#       env:
+#         EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+#
       # optional if ur feelin it
       # - run: eas submit --platform android --latest
