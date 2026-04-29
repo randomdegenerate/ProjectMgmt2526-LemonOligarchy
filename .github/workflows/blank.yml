@@ -1,0 +1,42 @@
+name: Build Dev Android
+
+on:
+  workflow_run:
+    workflows: ["CI Dev"]
+    types: [completed]
+  push:
+    branches:
+      - dev
+      - 'feature/**'
+
+jobs:
+  build:
+    if: |
+      (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success') ||
+      github.event_name == 'push'
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout correct commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm ci
+
+      - run: npm install -g expo-cli eas-cli
+
+      - name: Expo auth
+        run: eas whoami
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Build dev Android
+        run: eas build --platform android --profile development --non-interactive
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
