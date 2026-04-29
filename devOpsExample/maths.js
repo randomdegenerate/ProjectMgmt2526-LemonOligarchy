@@ -12,4 +12,9 @@ function sum(a , b) {
     return a + b
 }
 
-module.exports = {multiply, subtract , sum , PI}
+// new math function added
+function square(a) {
+    return a * a
+}
+
+module.exports = {multiply, subtract , sum , PI, square}

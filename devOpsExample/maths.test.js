@@ -12,6 +12,10 @@ test('five minus four is 1', () => {
     expect(maths.subtract(5,4)).toBe(1)
 })
 
+test('3 squared should be 9!', () => {
+    expect(maths.square(3)).toBe(9)
+})
+
 /*test('Pi is a cake!', () => {
     expect(maths.PI).toEqual('cake')
 })*/
